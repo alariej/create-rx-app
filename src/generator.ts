@@ -8,7 +8,6 @@ import os from 'os';
 import { flatten, omit, merge } from 'lodash';
 import { spawnSync } from 'child_process';
 
-import { PackageManager } from './package-manager';
 import { getVersion, sortKeys } from './utils';
 import { Dictionary, Options } from './types';
 
@@ -39,8 +38,6 @@ const WINDOWS_TEMPORARY_KEY_PATH = path.join(
   'ProjectName_TemporaryKey.pfx',
 );
 
-const { chdir } = process;
-
 export class Generator {
   private templateFolderName: TemplateFolderName;
   private packageJson: Dictionary = {};
@@ -65,7 +62,7 @@ export class Generator {
   }
 
   public run(): void {
-    const { projectPath, skipInstall } = this.options;
+    const { projectPath } = this.options;
 
     console.log(
       chalk.white.bold('Setting up new ReactXP app in %s'),
@@ -77,10 +74,6 @@ export class Generator {
 
     this.setPackageJson();
     this.generatePackageJson();
-
-    if (!skipInstall) {
-      this.installDependencies();
-    }
 
     this.generateApp();
     this.generateWindowsApp();
@@ -216,13 +209,12 @@ export class Generator {
   }
 
   private generatePackageJson(): void {
-    const { projectPath, projectName, skipInstall } = this.options;
+    const { projectPath, projectName } = this.options;
     const packageJson = JSON.stringify(
       {
         name: projectName.toLowerCase(),
         ...omit(
           this.packageJson,
-          skipInstall ? [] : ['devDependencies', 'dependencies'],
         ),
       },
       null,
@@ -233,7 +225,7 @@ export class Generator {
   }
 
   private printInstructions(): void {
-    const { projectName, projectPath, skipInstall, yarn } = this.options;
+    const { projectName, projectPath } = this.options;
     const xcodeProjectPath = `${path.resolve(
       projectPath,
       IOS_FOLDER,
@@ -250,9 +242,8 @@ export class Generator {
       projectName,
     );
 
-    if (skipInstall) {
-      console.log(chalk.green.bold('To install dependencies:'));
-      console.log('  cd %s', projectPath);
+    console.log(chalk.green.bold('To install dependencies:'));
+    console.log('  cd %s', projectPath);
       console.log(chalk.white.bold('  %s \n'), yarn ? YARN : NPM_INSTALL);
     }
 
@@ -295,16 +286,6 @@ export class Generator {
       windowsProjectPath,
     );
     console.log('  press the Run button \n');
-  }
-
-  private installDependencies(): void {
-    const { devDependencies, dependencies } = this.packageJson;
-    const { projectPath, yarn } = this.options;
-    const packageManager = new PackageManager(yarn);
-
-    chdir(projectPath);
-    packageManager.install(devDependencies, 'dev dependencies', true);
-    packageManager.install(dependencies, 'dependencies');
   }
 
   private setPackageJson(): void {
