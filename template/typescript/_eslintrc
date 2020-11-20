@@ -10,8 +10,7 @@
   "plugins": [
     "@typescript-eslint",
     "react",
-    "reactxp"<% ^skipJest %>,
-    "jest"<% /skipJest %>
+    "reactxp"
   ],
   "extends": [
     "eslint:recommended",
@@ -19,8 +18,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:reactxp/recommended",
-    "plugin:react/recommended"<% ^skipJest %>,
-    "plugin:jest/recommended"<% /skipJest %>
+    "plugin:react/recommended"
   ],
   "env": {
     "browser": true,

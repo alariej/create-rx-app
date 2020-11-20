@@ -38,7 +38,6 @@ const WINDOWS_TEMPORARY_KEY_PATH = path.join(
   'ProjectName',
   'ProjectName_TemporaryKey.pfx',
 );
-const JEST_TEMPLATE_PATH = path.join(COMMON_TEMPLATE_PATH, 'jest');
 
 const { chdir } = process;
 
@@ -89,17 +88,11 @@ export class Generator {
   }
 
   private generateApp(): void {
-    const { skipJest, javascript } = this.options;
     const templatePaths = [
       COMMON_TEMPLATE_PATH,
       path.join(TEMPLATE_PATH, this.templateFolderName),
     ];
     const excludePaths = [WINDOWS_TEMPLATE_PATH, TEMP_PACKAGE_JSON];
-
-    if (skipJest) {
-      excludePaths.push(JEST_TEMPLATE_PATH);
-      excludePaths.push(`App.spec.${javascript ? 'js' : 'tsx'}`);
-    }
 
     const pathParams = {
       ...this.params,
@@ -116,7 +109,6 @@ export class Generator {
       ...this.params,
       runCommand: this.runCommand,
       version: getVersion(),
-      skipJest,
     };
 
     templatePaths.forEach((srcPath) =>
@@ -329,7 +321,6 @@ export class Generator {
   }
 
   private buildPackageJson(srcFolder: string): Dictionary {
-    const { skipJest, yarn } = this.options;
     const content = fs.readFileSync(
       path.join(TEMPLATE_PATH, srcFolder, TEMP_PACKAGE_JSON),
       { encoding: 'utf8' },
@@ -337,7 +328,6 @@ export class Generator {
     const params = {
       paramsPrefix: yarn ? ' ' : ' -- ',
       runCommand: this.runCommand,
-      skipJest,
     };
 
     return JSON.parse(template.render(content, params, {}, ['<%', '%>']));

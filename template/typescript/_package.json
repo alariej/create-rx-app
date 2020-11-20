@@ -6,10 +6,6 @@
     "lint": "eslint --config .eslintrc --ext .ts,.tsx src"
   },
   "devDependencies": {
-    <% ^skipJest %>
-    "@types/jest": "25.2.3",
-    "@types/enzyme": "3.10.5",
-    <% /skipJest %>
     "eslint-plugin-reactxp": "0.1.10",
     "@typescript-eslint/parser": "3.2.0",
     "@typescript-eslint/eslint-plugin": "3.2.0",
