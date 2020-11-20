@@ -47,7 +47,6 @@
     "eslint": "7.9.0",
     "eslint-plugin-jest": "24.0.2",
     "fs-extra": "9.0.1",
-    "husky": "4.3.0",
     "jest": "26.4.2",
     "lodash": "4.17.20",
     "mustache": "4.0.1",
@@ -62,10 +61,5 @@
   },
   "engines": {
     "node": ">=8.11.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run format:check && npm run build"
-    }
   }
 }
