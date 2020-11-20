@@ -9,7 +9,7 @@
     "start:windows": "<% runCommand %> rn-cli<% paramsPrefix %>run-windows",
     "start:ios": "<% runCommand %> rn-cli<% paramsPrefix %>run-ios",
     "start:web": "cross-env platform=web webpack-dev-server --config=web/webpack/dev.js --progress --colors --mode=development",
-    "start:rn-dev-server": "<% runCommand %> rn-cli<% paramsPrefix %>start --reset-cache",
+    "start:rndev": "<% runCommand %> rn-cli<% paramsPrefix %>start --reset-cache",
     "build:web": "cross-env platform=web webpack --config=web/webpack/prod.js --progress --colors --mode=production"
   },
   "devDependencies": {
