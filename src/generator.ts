@@ -19,7 +19,6 @@ interface GeneratorOptions extends Options {
 }
 
 const TYPESCRIPT_FOLDER = 'typescript';
-const JAVASCRIPT_FOLDER = 'javascript';
 const WINDOWS_FOLDER = 'windows';
 const COMMON_FOLDER = 'common';
 const IOS_FOLDER = 'ios';
@@ -27,7 +26,6 @@ const TEMP_PACKAGE_JSON = '_package.json';
 
 const NPM_INSTALL = 'npm i';
 const NPM_RUN = 'npm run';
-const YARN = 'yarn';
 
 const TEMPLATE_PATH = path.resolve(__dirname, '..', 'template');
 const COMMON_TEMPLATE_PATH = path.join(TEMPLATE_PATH, COMMON_FOLDER);
@@ -46,7 +44,7 @@ export class Generator {
   private params: Dictionary = {};
 
   public constructor(options: GeneratorOptions) {
-    const { projectName, javascript, yarn } = options;
+    const { projectName } = options;
 
     this.params = {
       ProjectName: projectName,
@@ -54,10 +52,8 @@ export class Generator {
       projectname: projectName.toLowerCase(),
     };
 
-    this.templateFolderName = javascript
-      ? JAVASCRIPT_FOLDER
-      : TYPESCRIPT_FOLDER;
-    this.runCommand = yarn ? YARN : NPM_RUN;
+    this.templateFolderName = TYPESCRIPT_FOLDER;
+    this.runCommand = NPM_RUN;
     this.options = options;
   }
 
@@ -244,8 +240,7 @@ export class Generator {
 
     console.log(chalk.green.bold('To install dependencies:'));
     console.log('  cd %s', projectPath);
-      console.log(chalk.white.bold('  %s \n'), yarn ? YARN : NPM_INSTALL);
-    }
+    console.log(chalk.white.bold('  %s \n'), NPM_INSTALL);
 
     console.log(chalk.yellow.bold('To run your app on Web:'));
     console.log('  cd %s', projectPath);
@@ -307,7 +302,7 @@ export class Generator {
       { encoding: 'utf8' },
     );
     const params = {
-      paramsPrefix: yarn ? ' ' : ' -- ',
+      paramsPrefix: ' -- ',
       runCommand: this.runCommand,
     };
 
