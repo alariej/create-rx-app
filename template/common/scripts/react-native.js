@@ -1,8 +1,5 @@
-if (
-  process.argv.includes('run-ios') && !process.argv.includes('--simulator')
-) {
-  process.argv.push('--simulator');
-  process.argv.push('iPhone 11'); // Set Default simulator
+if (process.argv.includes('run-ios')) {
+  process.argv.push('--device');
 }
 
 require('@react-native-community/cli').run();
