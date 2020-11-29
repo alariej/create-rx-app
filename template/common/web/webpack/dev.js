@@ -17,7 +17,7 @@ module.exports = (env, argv) => (
       openPage: '',
       inline: true,
       stats: 'minimal',
-      open: true,
+      open: false,
       port: 9999,
       hot: true,
     },
